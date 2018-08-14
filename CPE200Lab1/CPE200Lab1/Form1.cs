@@ -14,6 +14,7 @@ namespace CPE200Lab1
     {
         float temp = 0, value = 0;
         string previousoper = "+";
+        bool re = false;
         bool presi = false;
     
         public Form1()
@@ -37,21 +38,6 @@ namespace CPE200Lab1
             lblDisplay.Text = value.ToString();
         }
 
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btnMultiply_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btnDivide_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void btnDot_Click(object sender, EventArgs e)
         {
             
@@ -70,19 +56,20 @@ namespace CPE200Lab1
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            
+            lblDisplay.Text = "0";
+            previousoper = "+";
         }
 
         private void btnPlus_Click(object sender, EventArgs e)
         {
-            value += float.Parse(lblDisplay.Text);
         }
 
         void clickbut(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            if (lblDisplay.Text == "0" )
+            if (lblDisplay.Text == "0" || re)
             {
+                re = false;
                 lblDisplay.Text = "";
             }
                 if (lblDisplay.Text.Length <8)
@@ -109,8 +96,16 @@ namespace CPE200Lab1
             {
                 value /= float.Parse(lblDisplay.Text);
             }
+            re = true;
 
-            previousoper = btn.Text;
+            if (btn.Text == "=")
+            {
+                lblDisplay.Text = value.ToString();
+                previousoper = "+";
+
+            }       
+            else
+                previousoper = btn.Text;
         }
     }
 }
