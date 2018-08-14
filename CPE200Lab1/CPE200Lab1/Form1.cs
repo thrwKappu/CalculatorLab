@@ -30,49 +30,36 @@ namespace CPE200Lab1
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-           
-        }
+            if(lblDisplay.Text != "")
+            lblDisplay.Text = lblDisplay.Text.Substring(0,lblDisplay.Text.Length - 1);
+        }   
 
-        private void btnEqual_Click(object sender, EventArgs e)
-        {
-            lblDisplay.Text = value.ToString();
-        }
-
-        private void btnDot_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         private void btnSign_Click(object sender, EventArgs e)
         {
-            
+             value = float.Parse(lblDisplay.Text);
+            value *= -1;
+            lblDisplay.Text = value.ToString();
 
-        }
-
-        private void btnPercent_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             lblDisplay.Text = "0";
             previousoper = "+";
+            value = 0;
         }
 
-        private void btnPlus_Click(object sender, EventArgs e)
-        {
-        }
 
         void clickbut(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            if (lblDisplay.Text == "0" || re)
+            if ((lblDisplay.Text == "0" || re)&& btn.Text != ".")
             {
                 re = false;
                 lblDisplay.Text = "";
             }
-                if (lblDisplay.Text.Length <8)
+                if (lblDisplay.Text.Length <9)
             {
                 lblDisplay.Text += btn.Text;
             }
@@ -88,7 +75,7 @@ namespace CPE200Lab1
             {
                 value -= float.Parse(lblDisplay.Text);
             }
-            else if (previousoper == "x")
+            else if (previousoper == "X")
             {
                 value *= float.Parse(lblDisplay.Text);
             }
@@ -96,16 +83,23 @@ namespace CPE200Lab1
             {
                 value /= float.Parse(lblDisplay.Text);
             }
+            else if (previousoper == "%")
+            {
+                if (value <= float.Parse(lblDisplay.Text))
+                    value = (value / 100) * float.Parse(lblDisplay.Text);
+                else value = (float.Parse(lblDisplay.Text) / 100) * value;
+            }
             re = true;
 
             if (btn.Text == "=")
             {
                 lblDisplay.Text = value.ToString();
                 previousoper = "+";
+                value = 0;
 
             }       
-            else
-                previousoper = btn.Text;
+            else previousoper = btn.Text;
+            
         }
     }
 }
