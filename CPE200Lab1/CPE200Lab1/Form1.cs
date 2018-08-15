@@ -26,7 +26,6 @@ namespace CPE200Lab1
 
         }
 
-
         private void btnBack_Click(object sender, EventArgs e)
         {
             if(lblDisplay.Text != "")
@@ -35,7 +34,6 @@ namespace CPE200Lab1
                 lblDisplay.Text = "0";
 
         }   
-
 
         private void btnSign_Click(object sender, EventArgs e)
         {
@@ -54,7 +52,6 @@ namespace CPE200Lab1
             re = false;
         }
 
-
         void clickbut(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -70,7 +67,6 @@ namespace CPE200Lab1
         }
         void clickoper(object sender, EventArgs e)
         {
-
                Button btn = (Button)sender;
             if(!re)
             {
@@ -97,10 +93,6 @@ namespace CPE200Lab1
                 }
             }
             
-
-                
-
-
             if (btn.Text == "=")
             {
                 if(!re)
@@ -112,15 +104,6 @@ namespace CPE200Lab1
                 previousoper = btn.Text;
             }
             re = true;
-            /* if (btn.Text == "=")
-             {
-                 lblDisplay.Text = value.ToString();
-                 previousoper = "+";
-                 value = 0;
-
-             }
-             else previousoper = btn.Text;*/
-
 
         }
     }
