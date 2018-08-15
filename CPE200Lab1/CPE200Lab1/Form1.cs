@@ -12,10 +12,9 @@ namespace CPE200Lab1
 {
     public partial class Form1 : Form
     {
-        float temp = 0, value = 0;
+        float  value = 0, value2=0;
         string previousoper = "+";
         bool re = false;
-        bool presi = false;
     
         public Form1()
         {
@@ -32,6 +31,9 @@ namespace CPE200Lab1
         {
             if(lblDisplay.Text != "")
             lblDisplay.Text = lblDisplay.Text.Substring(0,lblDisplay.Text.Length - 1);
+            if (lblDisplay.Text == "")
+                lblDisplay.Text = "0";
+
         }   
 
 
@@ -48,6 +50,8 @@ namespace CPE200Lab1
             lblDisplay.Text = "0";
             previousoper = "+";
             value = 0;
+            value2 = 0;
+            re = false;
         }
 
 
@@ -56,50 +60,68 @@ namespace CPE200Lab1
             Button btn = (Button)sender;
             if ((lblDisplay.Text == "0" || re)&& btn.Text != ".")
             {
-                re = false;
                 lblDisplay.Text = "";
             }
                 if (lblDisplay.Text.Length <9)
             {
                 lblDisplay.Text += btn.Text;
             }
+            re = false;
         }
         void clickoper(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            if (previousoper == "+")
+
+               Button btn = (Button)sender;
+            if(!re)
             {
-                value+= float.Parse(lblDisplay.Text);
+                value2 = float.Parse(lblDisplay.Text);
+                if (previousoper == "+")
+                {
+                    value += value2;
+                }
+                else if (previousoper == "-")
+                {
+                    value -= value2;
+                }
+                else if (previousoper == "X")
+                {
+                    value *= value2;
+                }
+                else if (previousoper == "÷")
+                {
+                    value /= value2;
+                }
+                else if (previousoper == "%")
+                {
+                    value = (value / 100) * value2;
+                }
             }
-            else if (previousoper == "-")
-            {
-                value -= float.Parse(lblDisplay.Text);
-            }
-            else if (previousoper == "X")
-            {
-                value *= float.Parse(lblDisplay.Text);
-            }
-            else if (previousoper == "÷")
-            {
-                value /= float.Parse(lblDisplay.Text);
-            }
-            else if (previousoper == "%")
-            {
-                if (value <= float.Parse(lblDisplay.Text))
-                    value = (value / 100) * float.Parse(lblDisplay.Text);
-                else value = (float.Parse(lblDisplay.Text) / 100) * value;
-            }
-            re = true;
+            
+
+                
+
 
             if (btn.Text == "=")
             {
+                if(!re)
                 lblDisplay.Text = value.ToString();
-                previousoper = "+";
-                value = 0;
+            }
+            else
+            {
+                lblDisplay.Text = value.ToString();
+                previousoper = btn.Text;
+            }
+            re = true;
+            /* if (btn.Text == "=")
+             {
+                 lblDisplay.Text = value.ToString();
+                 previousoper = "+";
+                 value = 0;
 
-            }       
-            else previousoper = btn.Text;
-            
+             }
+             else previousoper = btn.Text;*/
+
+
         }
     }
 }
