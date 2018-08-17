@@ -96,7 +96,14 @@ namespace CPE200Lab1
             if (btn.Text == "=")
             {
                 if(!re)
-                lblDisplay.Text = value.ToString();
+                {
+                    lblDisplay.Text = value.ToString();
+                    if(lblDisplay.Text.Length > 9)
+                    {
+                        lblDisplay.Text = "Error";
+                    }
+                }
+                
             }
             else
             {
