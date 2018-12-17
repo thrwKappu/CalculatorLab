@@ -8,31 +8,35 @@ namespace CPE200Lab1
 {
     public class CalculatorEngine
     {
-        private bool isNumber(string str)
+        public bool isNumber(string str)
         {
             double retNum;
             return Double.TryParse(str, out retNum);
         }
 
-        private bool isOperator(string str)
+        public bool isOperator(string str)
         {
             switch(str) {
                 case "+":
                 case "-":
                 case "X":
                 case "÷":
+                case "√":
+                case "%":
+                case "1/x":
                     return true;
             }
             return false;
         }
 
-        public string Process(string str)
+        public virtual string Process(string str)
         {
             string[] parts = str.Split(' ');
             if(!(isNumber(parts[0]) && isOperator(parts[1]) && isNumber(parts[2])))
             {
                 return "E";
-            } else
+            }
+            else
             {
                 return calculate(parts[1], parts[0], parts[2], 4);
             }
@@ -88,14 +92,17 @@ namespace CPE200Lab1
 
         public string calculate(string operate, string firstOperand, string secondOperand, int maxOutputSize = 8)
         {
+            var _first = Convert.ToDouble(firstOperand);
+            var _second = Convert.ToDouble(secondOperand);
+
             switch (operate)
             {
                 case "+":
-                    return (Convert.ToDouble(firstOperand) + Convert.ToDouble(secondOperand)).ToString();
+                    return (_first + _second).ToString();
                 case "-":
-                    return (Convert.ToDouble(firstOperand) - Convert.ToDouble(secondOperand)).ToString();
+                    return (_first - _second).ToString();
                 case "X":
-                    return (Convert.ToDouble(firstOperand) * Convert.ToDouble(secondOperand)).ToString();
+                    return (_first * _second).ToString();
                 case "÷":
                     // Not allow devide be zero
                     if (secondOperand != "0")
@@ -104,7 +111,7 @@ namespace CPE200Lab1
                         string[] parts;
                         int remainLength;
 
-                        result = (Convert.ToDouble(firstOperand) / Convert.ToDouble(secondOperand));
+                        result = (_first / _second);
                         // split between integer part and fractional part
                         parts = result.ToString().Split('.');
                         // if integer part length is already break max output, return error
@@ -120,9 +127,18 @@ namespace CPE200Lab1
                     break;
                 case "%":
                     //your code here
+                    return (_first + ((_second * _first) / 100)).ToString();
+                case "1/x":
+                    if (secondOperand != "0")
+                    {
+                        return (1 / _first).ToString().Substring(0,8);
+                    }
                     break;
+                case "√":
+                    return Math.Sqrt(_second).ToString().Substring(0,8);
             }
             return "E";
         }
+
     }
 }
